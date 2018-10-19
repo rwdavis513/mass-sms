@@ -1,6 +1,9 @@
 import os
 from twilio.rest import Client
+from dotenv import load_dotenv
+from app.messages import message_info
 
+load_dotenv(verbose=True)
 APP_DIR = os.path.dirname(__file__)
 
 account_sid = os.getenv('TWILIO_ACCOUNT_SID')
@@ -24,12 +27,14 @@ def get_phone_list(file_path=os.path.join(APP_DIR, 'phone_list.txt')):
     return phone_list
 
 
-def main():
-    phone_numbers = get_phone_list()
+def main(message, phone_number_file_name):
+    if len(message) > 165:
+        raise Exception("Message length is more than one text. length={}".format(len(message)))
+    phone_numbers = get_phone_list(phone_number_file_name)
     for phone_number in phone_numbers:
         try:
             message = client.messages \
-                            .create(body="Friendly reminder to practice your memory madness verse. You can do it!",
+                            .create(body=message,
                                     from_=TWILIO_PHONE_NUMBER,
                                     to=phone_number
                                    )
@@ -40,4 +45,5 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+
+    main(**message_info())

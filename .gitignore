@@ -1,5 +1,10 @@
 phone_list.txt
 .idea/
+.env
+app/messages.py
+*.json
+*.txt
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
