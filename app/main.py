@@ -1,7 +1,7 @@
 import os
 from twilio.rest import Client
 from dotenv import load_dotenv
-from app.messages import message_info
+from messages import message_info
 
 load_dotenv(verbose=True)
 APP_DIR = os.path.dirname(__file__)
@@ -46,4 +46,4 @@ def main(message, phone_number_file_name):
 
 if __name__ == '__main__':
 
-    main(**message_info())
+    main(**message_info)
